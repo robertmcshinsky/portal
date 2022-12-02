@@ -7,11 +7,14 @@
     "require": {
         "php": "^8.0.2",
         "backpack/crud": "^5.4",
+        "backpack/permissionmanager": "^6.0",
+        "backpack/pro": "^1.4",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "laravel/ui": "^4.1"
     },
     "require-dev": {
         "backpack/generators": "^3.3",
@@ -64,5 +67,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "backpack": {
+            "type": "composer",
+            "url": "https://repo.backpackforlaravel.com/"
+        }
+    }
 }

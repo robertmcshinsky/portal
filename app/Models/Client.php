@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Clients extends Model
+class Client extends Model
 {
     use CrudTrait;
 
@@ -17,10 +17,9 @@ class Clients extends Model
 
     protected $table = 'clients';
     // protected $primaryKey = 'id';
-    protected $connection = 'mysql';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'netsuite_id', 'shipstation_store'];
+    // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -35,7 +34,9 @@ class Clients extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function secret() {
+        return $this->hasOne(Secret::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

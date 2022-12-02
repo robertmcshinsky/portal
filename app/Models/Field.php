@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class CertificateFields extends Model
+class Field extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class CertificateFields extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'certificate_fields';
+    protected $table = 'fields';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,7 +34,9 @@ class CertificateFields extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function template() {
+        return $this->belongsToMany(Template::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

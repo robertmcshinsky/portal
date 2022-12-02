@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class CertificateTemplates extends Model
+class Secret extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class CertificateTemplates extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'certificate_templates';
+    protected $table = 'secrets';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,7 +34,9 @@ class CertificateTemplates extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function client() {
+        return $this->belongsTo(Client::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Secrets extends Model
+class Template extends Model
 {
     use CrudTrait;
 
@@ -15,12 +15,7 @@ class Secrets extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'secrets';
-
-    protected $connection = 'mysql';
-
-    protected $fillable = ["name", "client_id", "secret", "site"];
-
+    protected $table = 'templates';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -39,7 +34,9 @@ class Secrets extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function fields() {
+        return $this->hasMany(Field::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -17,8 +17,9 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::crud('user', 'UserCrudController');
-    Route::crud('secrets', 'SecretsCrudController');
-    Route::crud('clients', 'ClientsCrudController');
-    Route::crud('certificate-fields', 'CertificateFieldsCrudController');
-    Route::crud('certificate-templates', 'CertificateTemplatesCrudController');
+    Route::crud('client', 'ClientCrudController');
+    Route::crud('secret', 'SecretCrudController');
+    Route::crud('field', 'FieldCrudController');
+    Route::crud('template', 'TemplateCrudController');
+    Route::get('api/template/{id}', 'TemplateCrudController@edit_fields');
 }); // this should be the absolute last line of this file

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ClientsRequest;
+use App\Http\Requests\ClientRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class ClientsCrudController
+ * Class ClientCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ClientsCrudController extends CrudController
+class ClientCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class ClientsCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Clients::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/clients');
-        CRUD::setEntityNameStrings('clients', 'clients');
+        CRUD::setModel(\App\Models\Client::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/client');
+        CRUD::setEntityNameStrings('client', 'clients');
     }
 
     /**
@@ -39,10 +39,8 @@ class ClientsCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
         CRUD::column('name');
         CRUD::column('netsuite_id');
-        CRUD::column('shipstation_store');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -59,12 +57,10 @@ class ClientsCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ClientsRequest::class);
+        CRUD::setValidation(ClientRequest::class);
 
         CRUD::field('name');
         CRUD::field('netsuite_id');
-        CRUD::field('shipstation_store');
-
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -83,6 +79,4 @@ class ClientsCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
-
 }
