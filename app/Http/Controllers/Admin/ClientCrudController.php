@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ClientRequest;
+use App\Models\Template;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -18,6 +19,12 @@ class ClientCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CloneOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+
+
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -41,6 +48,8 @@ class ClientCrudController extends CrudController
     {
         CRUD::column('name');
         CRUD::column('netsuite_id');
+        CRUD::column('templates')->type('relationship');
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -61,7 +70,13 @@ class ClientCrudController extends CrudController
 
         CRUD::field('name');
         CRUD::field('netsuite_id');
-
+        //CRUD::field('template')->type('relationship')->size(6);
+        CRUD::addField([
+            'type'          => "relationship",
+            'name'          => 'templates', // the method on your model that defines the relationship
+            'ajax'          => true,
+            'inline_create' => true,
+        ]);
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -78,5 +93,9 @@ class ClientCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function fetchTemplates() {
+        return $this->fetch(Template::class);
     }
 }

@@ -37,6 +37,10 @@ class Client extends Model
     public function secret() {
         return $this->hasOne(Secret::class);
     }
+
+    public function templates() {
+        return $this->belongsToMany(Template::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

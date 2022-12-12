@@ -34,7 +34,7 @@ class Field extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function template() {
+    public function templates() {
         return $this->belongsToMany(Template::class);
     }
     /*

@@ -60,7 +60,11 @@ class UserCrudController extends CrudController
         CRUD::setValidation(UserRequest::class);
 
         CRUD::field('name');
-        CRUD::field('email');
+        CRUD::addField([   // Email
+            'name'  => 'email',
+            'label' => 'Email Address',
+            'type'  => 'email'
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

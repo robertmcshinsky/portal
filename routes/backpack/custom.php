@@ -19,7 +19,7 @@ Route::group([
     Route::crud('user', 'UserCrudController');
     Route::crud('client', 'ClientCrudController');
     Route::crud('secret', 'SecretCrudController');
-    Route::crud('field', 'FieldCrudController');
-    Route::crud('template', 'TemplateCrudController');
-    Route::get('api/template/{id}', 'TemplateCrudController@edit_fields');
+    Route::crud('fields', 'FieldCrudController');
+    Route::crud('templates', 'TemplateCrudController');
+    Route::get('api/templates/{id}', 'TemplateCrudController@edit_fields');
 }); // this should be the absolute last line of this file

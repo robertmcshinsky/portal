@@ -20,6 +20,13 @@ class TemplateCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CloneOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+
+
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,14 +36,25 @@ class TemplateCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\Template::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/template');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/templates');
         CRUD::setEntityNameStrings('template', 'templates');
 
         $this->crud->enableDetailsRow();
-
-        //$this->crud->setEditView('test');
+        $this->crud->setDetailsRowView('test');
     }
 
+
+    private function getFieldsData() {
+        return [
+            [
+                'name' => 'image',
+                'label' => 'image',
+                'type' => 'image',
+                'crop' => true,
+                'aspect_ratio' => 1
+            ]
+        ];
+    }
     /**
      * Define what happens when the List operation is loaded.
      *
@@ -46,8 +64,9 @@ class TemplateCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('name');
-        CRUD::column('fields_id');
-
+        CRUD::column('fields')->type('relationship');
+        $this->crud->set('show.setFromDb', false);
+        $this->crud->addColumns($this->getFieldsData());
 
         //$this->crud->addButtonFromView('line','edit-fields','edit-fields','beginning');
         /**
@@ -68,7 +87,26 @@ class TemplateCrudController extends CrudController
         CRUD::setValidation(TemplateRequest::class);
 
         CRUD::field('name');
-        CRUD::field('fields_id');
+        //CRUD::field('fields')->type('checklist')->tab('Fields');
+        CRUD::addField([   // Checklist
+            'label'     => 'Fields',
+            'type'      => 'checklist',
+            'name'      => 'fields',
+            'attribute' => 'name',
+            'model'     => "App\Models\Field",
+            'pivot'     => true,
+            'ajax' => true,
+            'inline_create' => [ 'entity' => 'fields'],
+            'tab' => 'Fields'
+            // 'number_of_columns' => 3,
+        ]);
+        CRUD::addField([
+            'name' => 'image',
+            'label' => 'Image',
+            'type' => 'upload',
+            'upload' => true,
+            'disk' => 'uploads'
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -88,7 +126,12 @@ class TemplateCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    public function edit_fields($id) {
-        return Template::find($id);
+//    public function edit_fields($id) {
+//        return Template::find($id);
+//    }
+
+    public function fetchFields() {
+        return $this->fetch(Field::class);
     }
+
 }

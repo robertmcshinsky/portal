@@ -18,6 +18,11 @@ class FieldCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CloneOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkCloneOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\BulkDeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -27,8 +32,9 @@ class FieldCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\Field::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/field');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/fields');
         CRUD::setEntityNameStrings('field', 'fields');
+
     }
 
     /**
@@ -40,6 +46,7 @@ class FieldCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('name');
+        //CRUD::column('template_id');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -59,6 +66,7 @@ class FieldCrudController extends CrudController
         CRUD::setValidation(FieldRequest::class);
 
         CRUD::field('name');
+        //CRUD::field('template_id');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
